@@ -1,3 +1,5 @@
+github.com/ScooterHelmet/procedures/pkg/sqlprocessor v0.0.0-20230404022802-4cc30edd8fda h1:7NLnUou3QjBNeYsifKO+0wXibqQFF3MBblixfR7plHM=
+github.com/ScooterHelmet/procedures/pkg/sqlprocessor v0.0.0-20230404022802-4cc30edd8fda/go.mod h1:ss1h7xcymngU2psNvb6AZ9FVdfwGZtMc88Sp6K57OUs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

@@ -152,4 +152,3 @@ pgAdmin is a popular open-source administration and management tool for the Post
    -    Expand "Databases" to see a list of available databases. You can interact with the databases, tables, and other objects by right-clicking them and selecting the desired operations from the context menu.  
 
 With pgAdmin, you can manage databases, tables, indexes, and other database objects, as well as run SQL queries, import/export data, and more.
-

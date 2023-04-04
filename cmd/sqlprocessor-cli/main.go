@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"../../pkg/sqlprocessor"
+	"github.com/ScooterHelmet/procedures/pkg/sqlprocessor"
 )
 
 func printHelp() {
@@ -16,6 +16,7 @@ Options:
   --help                Display this help message.
 
 Environment Variables:
+  PG_HOST               Set the PostgreSQL database connection. Options: host.docker.internal (macOs & Windows). Default: localhost.
   SSL_MODE              Set the SSL mode for the database connection. Options: disable, allow, prefer, require, verify-ca, verify-full. Default: disable.
 `
 	fmt.Println(helpText)
@@ -39,6 +40,12 @@ func main() {
 
 	filename := args[0]
 
+	pgHost := os.Getenv("PG_HOST")
+	if pgHost == "" {
+		pgHost = "localhost"
+		fmt.Println("Warning: PG_HOST not set. Using default: localhost")
+	}
+
 	sslMode := os.Getenv("SSL_MODE")
 	if sslMode == "" {
 		sslMode = "disable"
@@ -46,7 +53,7 @@ func main() {
 	}
 
 	config := sqlprocessor.Config{
-		Host:     "localhost",
+		Host:     pgHost,
 		Port:     5432,
 		User:     "postgres",
 		Password: "",

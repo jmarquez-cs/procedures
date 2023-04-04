@@ -6,7 +6,8 @@ services:
     build: .
     environment:
       - SSL_MODE=disable
+      - PG_HOST=host.docker.internal # Replace with your Docker host IP if on Linux
     volumes:
       - ./sqlfiles:/sqlfiles
-    entrypoint: ["/app/sqlprocessor-cli"]
+    entrypoint: [ /app/sqlprocessor-cli ]
     command: /sqlfiles/input.sql
