@@ -4,7 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"github.com/ScooterHelmet/procedures/pkg/sqlprocessor"
+
+	"../../pkg/sqlprocessor"
 )
 
 func printHelp() {
