@@ -3,10 +3,14 @@ package sqlprocessor
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
+
+	_ "github.com/lib/pq"
+
+	"github.com/doug-martin/goqu/v9"
+	"github.com/rocketlaunchr/dataframe-go/pandas"
 )
 
 type Config struct {
@@ -48,7 +52,17 @@ func ProcessSQLFile(filename string, config Config) error {
 			continue
 		}
 
-		_, err := db.Exec(query)
+		// Convert MySQL dialect to PostgreSQL dialect using pandas
+		convertedQuery, err := pandas.ConvertDialect(query, pandas.MySQL, pandas.PostgreSQL)
+		if err != nil {
+			return fmt.Errorf("failed to convert MySQL query to PostgreSQL query: %v", err)
+		}
+
+		// Use goqu to execute the converted query
+		dialect := goqu.Dialect("postgres")
+		exec := dialect.Exec(db)
+
+		_, err = exec.Exec(convertedQuery)
 		if err != nil {
 			return fmt.Errorf("failed to execute query: %v", err)
 		}
