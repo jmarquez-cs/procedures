@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  sqlprocessor:
+    image: sqlprocessor-cli
+    build: .
+    environment:
+      - SSL_MODE=disable
+    volumes:
+      - ./sqlfiles:/sqlfiles
+    entrypoint: ["/app/sqlprocessor-cli"]
+    command: /sqlfiles/input.sql

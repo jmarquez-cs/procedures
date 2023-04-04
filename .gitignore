@@ -1,0 +1,11 @@
+vendor/
+*.log
+*.out
+*.test
+*.test.coverprofile
+*.prof
+bin/
+.idea/
+.vscode/
+
+sqlfiles/**
