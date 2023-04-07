@@ -22,30 +22,6 @@ type Config struct {
 	DB       *sql.DB        // Add this line
 }
 
-func ProcessSQLDirectory(directory string, config Config) error {
-	files, err := afero.ReadDir(config.Fs, directory)
-	if err != nil {
-			return fmt.Errorf("failed to read directory: %v", err)
-	}
-
-	for _, file := range files {
-			if file.IsDir() {
-					continue
-			}
-
-			filename := filepath.Join(directory, file.Name())
-			if !isValidFile(filename) {
-					continue
-			}
-
-			if err := ProcessSQLFile(filename, config); err != nil {
-					return fmt.Errorf("failed to process file '%s': %v", filename, err)
-			}
-	}
-
-	return nil
-}
-
 func ProcessSQLFile(filename string, config Config) error {
 	if !isValidFile(filename) {
 		return fmt.Errorf("error: only .sql files are accepted")
@@ -93,4 +69,28 @@ func ProcessSQLFile(filename string, config Config) error {
 func isValidFile(filename string) bool {
 	extension := filepath.Ext(filename)
 	return strings.ToLower(extension) == ".sql"
+}
+
+func ProcessSQLDirectory(directory string, config Config) error {
+	files, err := afero.ReadDir(config.Fs, directory)
+	if err != nil {
+			return fmt.Errorf("failed to read directory: %v", err)
+	}
+
+	for _, file := range files {
+			if file.IsDir() {
+					continue
+			}
+
+			filename := filepath.Join(directory, file.Name())
+			if !isValidFile(filename) {
+					continue
+			}
+
+			if err := ProcessSQLFile(filename, config); err != nil {
+					return fmt.Errorf("failed to process file '%s': %v", filename, err)
+			}
+	}
+
+	return nil
 }

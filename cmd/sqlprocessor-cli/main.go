@@ -10,7 +10,7 @@ import (
 
 func printHelp() {
 	helpText := `
-Usage: program [options] <filename.sql>
+Usage: program [options] <file/path/*.sql>
 
 Options:
   --help                Display this help message.
@@ -20,9 +20,8 @@ Environment Variables:
   SSL_MODE              Set the SSL mode for the database connection. Options: disable, allow, prefer, require, verify-ca, verify-full. Default: disable.
 
 Command Line Arguments:
-  <filename.sql>        A path to an .sql file that you want to process.
-	<path/to/files>       A directory containing .sql files that you want to process.
-`
+  <path/to/files>        A path to an .sql file or directory containing .sql files that you want to process..
+	`
 	fmt.Println(helpText)
 }
 
@@ -72,8 +71,7 @@ func main() {
 	}
 
 	if fileInfo.IsDir() {
-		// trunk-ignore(golangci-lint/typecheck)
-		err = sqlprocessor.ProcessSQLDirectory(path, config)
+		// err = sqlprocessor.ProcessSQLDirectory(path, config)
 		if err != nil {
 			fmt.Printf("Error processing the directory: %v\n", err)
 			os.Exit(1)
