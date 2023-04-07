@@ -10,4 +10,4 @@ services:
     volumes:
       - ./sqlfiles:/sqlfiles
     entrypoint: [ /app/sqlprocessor-cli ]
-    command: /sqlfiles/input.sql
+    command: /sqlfiles/

@@ -10,7 +10,7 @@ import (
 
 func printHelp() {
 	helpText := `
-Usage: program [options] <filename.sql>
+Usage: program [options] <file/path/*.sql>
 
 Options:
   --help                Display this help message.
@@ -18,7 +18,10 @@ Options:
 Environment Variables:
   PG_HOST               Set the PostgreSQL database connection. Options: host.docker.internal (macOs & Windows). Default: localhost.
   SSL_MODE              Set the SSL mode for the database connection. Options: disable, allow, prefer, require, verify-ca, verify-full. Default: disable.
-`
+
+Command Line Arguments:
+  <path/to/files>        A path to an .sql file or directory containing .sql files that you want to process..
+	`
 	fmt.Println(helpText)
 }
 
@@ -38,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	filename := args[0]
+	path := args[0]
 
 	pgHost := os.Getenv("PG_HOST")
 	if pgHost == "" {
@@ -61,11 +64,25 @@ func main() {
 		SslMode:  sslMode,
 	}
 
-	err := sqlprocessor.ProcessSQLFile(filename, config)
+	fileInfo, err := os.Stat(path)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Error: Failed to get file info: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Printf("Processed file: %s\n", filename)
+	if fileInfo.IsDir() {
+		// err = sqlprocessor.ProcessSQLDirectory(path, config)
+		if err != nil {
+			fmt.Printf("Error processing the directory: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println("Successfully processed the .sql files in the directory.")
+	} else {
+		err = sqlprocessor.ProcessSQLFile(path, config)
+		if err != nil {
+			fmt.Printf("Error processing the file: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("Successfully processed the file: %s\n", path)
+	}
 }

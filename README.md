@@ -9,15 +9,33 @@ This project provides a command-line tool for processing SQL files on a PostgreS
     export SSL_MODE=disable
     cd cmd/sqlprocessorcli
     go build
-    ./sqlprocessorcli <filename.sql>
     ```
+2. Run `./sqlprocessorcli --help`
+    - Export environment variables to configure the SQL Processor CLI:
+       - **SSL_MODE** 
+            - Options: `disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full`. 
+            - Default: `SSL_MODE=disable`.
+       - **PG_HOST**
+            - Set the PostgreSQL database connection. Options: `PG_HOST=host.docker.internal` (macOs & Windows). 
+            - Default: `PG_HOST=localhost`.  
+            
 
-2. Configuration:
-    -    Use the following environment variables to configure the SQL Processor CLI:
-    -    SSL_MODE: Set to "disable" for an insecure connection or "require" for a secure connection. Defaults to "disable" if not set.
+- Processes a single .sql file: `./sqlprocessorcli <file.sql>`
+- Recursively processes .sql files at path: `./sqlprocessorcli </path/to/files/>` 
+
 
 3. Dependencies:
-    -    [github.com/lib/pq](https://github.com/lib/pq): PostgreSQL driver for Go.
+    - [github.com/lib/pq](https://github.com/lib/pq)
+    - [github.com/stretchr/testify](https://github.com/stretchr/testify)
+	- [github.com/ScooterHelmet/procedures/pkg/sqlprocessor](https://github.com/ScooterHelmet/procedures)
+    - [github.com/rubenv/sql-migrate](github.com/rubenv/sql-migrate)
+    - [github.com/DATA-DOG/go-sqlmock](github.com/DATA-DOG/go-sqlmock)
+	- [github.com/davecgh/go-spew](github.com/davecgh/go-spew)
+	- [github.com/go-gorp/gorp/v3](github.com/go-gorp/gorp/v3)
+	- [github.com/pmezard/go-difflib](github.com/pmezard/go-difflib)
+    - [github.com/spf13/afero](github.com/spf13/afero)
+    - [golang.org/x/text](golang.org/x/text)
+	- [gopkg.in/yaml.v3](gopkg.in/yaml.v3)
 
 4. Replace `yourusername`, `youruser`, `yourpassword`, and `yourdbname` with the appropriate values. The `SslMode` is set based on the environment variable `SSL_MODE`. If the system administrator does not provide the configuration, the default value is "disable", and a warning message is displayed.
 
