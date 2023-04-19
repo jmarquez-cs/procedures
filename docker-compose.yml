@@ -1,22 +1,22 @@
 version: "3.9"
 
 services:
-  sqlprocessor:
-    image: sqlprocessor-cli
-    build: .
-    environment:
-      - SSL_MODE=disable
-      - PG_HOST=host.docker.internal # Replace with your Docker host IP if on Linux
-    volumes:
-      - ./sqlfiles:/sqlfiles
-    entrypoint: [ /app/sqlprocessor-cli ]
-    command: /sqlfiles/
+  # sqlprocessor:
+  #   image: sqlprocessor-cli
+  #   build: .
+  #   environment:
+  #     - SSL_MODE=disable
+  #     - PG_HOST=host.docker.internal # Replace with your Docker host IP if on Linux
+  #   volumes:
+  #     - ./sqlfiles:/sqlfiles
+  #   entrypoint: [ /app/sqlprocessor-cli ]
+  #   command: /sqlfiles/
 
   mysql:
     image: mysql:latest
     container_name: mysql_container
     env_file:
-      - env.docker
+      - .env.docker
     ports:
       - 3306:3306
     volumes:
