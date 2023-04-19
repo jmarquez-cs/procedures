@@ -11,3 +11,20 @@ services:
       - ./sqlfiles:/sqlfiles
     entrypoint: [ /app/sqlprocessor-cli ]
     command: /sqlfiles/
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_user_name
+      MYSQL_PASSWORD: your_user_password
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql_data: null
